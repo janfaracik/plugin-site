@@ -24,6 +24,9 @@ function SearchBox({handleOnSubmit, showFilter, setShowFilter, query, setQuery})
                     {/*    <span>{showFilter ? '▼' : '◄' }</span>*/}
                     {/*</Button>}*/}
                     {/*{!setShowFilter && <Button onClick={handleOnSubmit} color="primary">Browse</Button>}*/}
+                    <button onClick={handleOnSubmit}>
+                        <ion-icon name="search-outline"/>
+                    </button>
                     <input
                         name="query"
                         value={query}
@@ -34,11 +37,8 @@ function SearchBox({handleOnSubmit, showFilter, setShowFilter, query, setQuery})
                             }
                         }}
                         onChange={(e) => setQuery(e.target.value)}
-                        placeholder="Find plugins..."
+                        placeholder="Search"
                     />
-                    <button onClick={handleOnSubmit}>
-                        <ion-icon name="search-outline" />
-                    </button>
                 </InputGroup>
             </div>
         </fieldset>

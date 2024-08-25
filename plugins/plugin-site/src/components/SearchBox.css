@@ -16,7 +16,7 @@
 /*}*/
 
 .form-group {
-    --background: color-mix(in srgb, var(--color) 5%, transparent);
+    --background: color-mix(in srgb, var(--color--secondary) 5%, transparent);
     --border: transparent;
 
     ::placeholder {
@@ -24,7 +24,7 @@
     }
 
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: auto 1fr;
     appearance: none;
     font-size: 1rem;
     background: var(--background);
@@ -34,7 +34,7 @@
     transition: 0.2s ease;
     box-shadow: 0 0 0 10px transparent;
     outline: none;
-    min-width: 700px;
+    backdrop-filter: blur(15px);
 
     &:not(:disabled) {
         &:hover {
@@ -61,7 +61,7 @@
         background: none;
         border: none;
         outline: none;
-        padding: 0.6rem 0.9rem;
+        padding: 0.6rem 0.9rem 0.6rem 0;
     }
 
     button {
@@ -77,9 +77,8 @@
         color: var(--color--secondary);
 
         ion-icon {
-            width: 1.rem;
-            height: 1.rem;
+            width: 1.125rem;
+            height: 1.125rem;
         }
     }
-
 }

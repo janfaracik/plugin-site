@@ -87,16 +87,13 @@ function IndexPage() {
         <Layout sourcePath={indexPage}>
             <SeoHeader />
             <div className="app-container" onSubmit={handleOnSubmit}>
-
-                <div className={'app-app-bar'}>
+                <div className={'app-search-thing'}>
                     <h1>Plugins</h1>
                     <SearchBox
                         handleOnSubmit={handleOnSubmit}
                         query={query}
                         setQuery={setQuery}
                     />
-                    {/* TODO - Remove this */}
-                    <div/>
                 </div>
 
                 <div className={'app-plugin-manager-carousel'}>
