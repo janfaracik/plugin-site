@@ -46,91 +46,135 @@ function PluginPageLayout({plugin, children}) {
     return (
         <Layout id="pluginPage">
             <SeoHeader title={cleanTitle(plugin.title)} description={plugin.excerpt} pathname={`/${plugin.name}`}/>
-            <div className="title-wrapper">
-                <h1 className="title">
-                    {cleanTitle(plugin.title)}
-                </h1>
-                <button className="btn btn-secondary" onClick={toggleShowInstructions}>
-                    How to install
-                </button>
-                <InstallInstructions isShowInstructions={isShowInstructions}
-                    toggleShowInstructions={toggleShowInstructions}
-                    pluginId={plugin.name}
-                    pluginVersion={plugin.version}/>
-            </div>
-            <div className="row flex pluginContainer flex-column-reverse flex-md-row">
-                <div className="col-md-9 main">
-                    <PluginActiveWarnings securityWarnings={plugin.securityWarnings} />
-                    <PluginGovernanceStatus plugin={plugin} />
-                    <PluginPageTabs tabs={tabs} />
-                    <div>
-                        {children}
+            <div className="app-container">
+                <div className="app-!-display-flex" style={{marginBottom: '10px'}}>
+                    <a className="app-back-link" href="/">
+                        Back to plugins
+                    </a>
+                </div>
+                <div className="app-app-bar">
+                    <div className="app-app-bar__content">
+                        <h1 className="title">
+                            {cleanTitle(plugin.title)}
+                        </h1>
+                    </div>
+                    <div className="app-app-bar__controls">
+                        <button className="app-button app-button--primary" onClick={toggleShowInstructions}>
+                            <ion-icon name="download-outline" />
+                            How to install
+                        </button>
+                        <InstallInstructions isShowInstructions={isShowInstructions}
+                            toggleShowInstructions={toggleShowInstructions}
+                            pluginId={plugin.name}
+                            pluginVersion={plugin.version}/>
                     </div>
                 </div>
-                <div className="col-md-3 sidebar">
-                    <h5>{`Version: ${plugin.version}`}</h5>
-                    <PluginLastReleased buildDate={plugin.buildDate} releaseTimestamp={plugin.releaseTimestamp} />
-                    <div>
-                        {'Requires Jenkins '}
-                        {plugin.requiredCore}
+                <div className="row flex pluginContainer flex-column-reverse flex-md-row">
+                    <div className="col-md-9 main">
+                        <PluginActiveWarnings securityWarnings={plugin.securityWarnings}/>
+                        <PluginGovernanceStatus plugin={plugin}/>
+                        <PluginPageTabs tabs={tabs}/>
+                        <div>
+                            {children}
+                        </div>
                     </div>
-                    <div>
-                        {'ID: '}
-                        {plugin.name}
-                    </div>
-                    <div className="sidebarSection">
-                        <PluginReadableInstalls currentInstalls={plugin.stats.currentInstalls}
-                            percentage={plugin.stats.currentInstallPercentage} />
-                        {(plugin.stats.installations || plugin.stats.installations === 0) && <>
-                            <div className="chart">
-                                <LineChart installations={plugin.stats.installations} />
+                    <div className="col-md-3 sidebar">
+                        <h5>{`Version: ${plugin.version}`}</h5>
+                        <PluginLastReleased buildDate={plugin.buildDate} releaseTimestamp={plugin.releaseTimestamp}/>
+                        <div>
+                            {'Requires Jenkins '}
+                            {plugin.requiredCore}
+                        </div>
+                        <div>
+                            {'ID: '}
+                            {plugin.name}
+                        </div>
+                        <div className="sidebarSection">
+                            <PluginReadableInstalls currentInstalls={plugin.stats.currentInstalls}
+                                percentage={plugin.stats.currentInstallPercentage}/>
+                            {(plugin.stats.installations || plugin.stats.installations === 0) && <>
+                                <div className="chart">
+                                    <LineChart installations={plugin.stats.installations}/>
+                                </div>
+                                <div className="label-link">
+                                    <a
+                                        href={`https://stats.jenkins.io/pluginversions/${plugin.name}.html`}>
+                                        View detailed
+                                        version information
+                                    </a>
+                                </div>
+                            </>}
+                        </div>
+                        <div className="sidebarSection">
+                            <h5>Links</h5>
+                            {plugin.scm && <div className="label-link"><a href={plugin.scm}>GitHub</a></div>}
+                            <PluginIssueTrackers issueTrackers={plugin.issueTrackers}/>
+                            {plugin.hasPipelineSteps && <div className="label-link">
+                                <a
+                                    href={`https://www.jenkins.io/doc/pipeline/steps/${plugin.name}`}>
+                                    Pipeline Step
+                                    Reference
+                                </a>
+                            </div>}
+                            {plugin.hasExtensions && <div className="label-link">
+                                <a
+                                    href={`https://www.jenkins.io/doc/developer/extensions/${plugin.name}`}>
+                                    Extension
+                                    Points
+                                </a>
+                            </div>}
+                            <div className="label-link">
+                                <a
+                                    href={`https://javadoc.jenkins.io/plugin/${plugin.name}`}>
+                                    Javadoc
+                                </a>
                             </div>
-                            <div className="label-link"><a href={`https://stats.jenkins.io/pluginversions/${plugin.name}.html`}>View detailed version information</a></div>
-                        </>}
-                    </div>
-                    <div className="sidebarSection">
-                        <h5>Links</h5>
-                        {plugin.scm && <div className="label-link"><a href={plugin.scm}>GitHub</a></div>}
-                        <PluginIssueTrackers issueTrackers={plugin.issueTrackers} />
-                        {plugin.hasPipelineSteps && <div className="label-link"><a href={`https://www.jenkins.io/doc/pipeline/steps/${plugin.name}`}>Pipeline Step Reference</a></div>}
-                        {plugin.hasExtensions && <div className="label-link"><a href={`https://www.jenkins.io/doc/developer/extensions/${plugin.name}`}>Extension Points</a></div>}
-                        <div className="label-link"><a href={`https://javadoc.jenkins.io/plugin/${plugin.name}`}>Javadoc</a></div>
-                    </div>
-                    <div className="sidebarSection">
-                        <h5>Labels</h5>
-                        <PluginLabels labels={plugin.labels} />
-                    </div>
-                    <div className="sidebarSection">
-                        <h5>Maintainers</h5>
-                        <PluginDevelopers developers={plugin.developers} />
-                    </div>
-                    {shouldShowWikiUrl(wiki) &&
-                        <div className="sidebarSection">
-                            <h5>Help us improve this page!</h5>
-                            {'This content is served from the  '}
-                            <a href={wiki.url} target="_wiki">Jenkins Wiki Export</a>
-                            {' which is now '}
-                            <a href="https://www.jenkins.io/blog/2021/09/04/wiki-attacked/" rel="noopener noreferrer" target="_blank">permanently offline</a>
-                            {' and before that a '}
-                            <a href="https://groups.google.com/forum/#!msg/jenkinsci-dev/lNmas8aBRrI/eL3u7A6qBwAJ" rel="noopener noreferrer" target="_blank">read-only state</a>
-                            {'. We would love your help in moving plugin documentation to GitHub, see '}
-                            <a href="https://jenkins.io/blog/2019/10/21/plugin-docs-on-github/" rel="noopener noreferrer" target="_blank">the guidelines</a>
-                            {'.'}
                         </div>
-                    }
-                    {shouldShowGitHubUrl(wiki) &&
                         <div className="sidebarSection">
-                            <h5>Help us improve this page!</h5>
-                            {'To propose a change submit a pull request to  '}
-                            <a href={wiki.url} rel="noopener noreferrer" target="_blank">the plugin page</a>
-                            {' on GitHub.'}
+                            <h5>Labels</h5>
+                            <PluginLabels labels={plugin.labels}/>
                         </div>
-                    }
-                    {plugin.securityWarnings &&
                         <div className="sidebarSection">
-                            <PluginInactiveWarnings securityWarnings={plugin.securityWarnings} />
+                            <h5>Maintainers</h5>
+                            <PluginDevelopers developers={plugin.developers}/>
                         </div>
-                    }
+                        {shouldShowWikiUrl(wiki) &&
+                            <div className="sidebarSection">
+                                <h5>Help us improve this page!</h5>
+                                {'This content is served from the  '}
+                                <a href={wiki.url} target="_wiki">Jenkins Wiki Export</a>
+                                {' which is now '}
+                                <a href="https://www.jenkins.io/blog/2021/09/04/wiki-attacked/"
+                                    rel="noopener noreferrer" target="_blank">
+                                    permanently offline
+                                </a>
+                                {' and before that a '}
+                                <a href="https://groups.google.com/forum/#!msg/jenkinsci-dev/lNmas8aBRrI/eL3u7A6qBwAJ"
+                                    rel="noopener noreferrer" target="_blank">
+                                    read-only state
+                                </a>
+                                {'. We would love your help in moving plugin documentation to GitHub, see '}
+                                <a href="https://jenkins.io/blog/2019/10/21/plugin-docs-on-github/"
+                                    rel="noopener noreferrer" target="_blank">
+                                    the guidelines
+                                </a>
+                                {'.'}
+                            </div>
+                        }
+                        {shouldShowGitHubUrl(wiki) &&
+                            <div className="sidebarSection">
+                                <h5>Help us improve this page!</h5>
+                                {'To propose a change submit a pull request to  '}
+                                <a href={wiki.url} rel="noopener noreferrer" target="_blank">the plugin page</a>
+                                {' on GitHub.'}
+                            </div>
+                        }
+                        {plugin.securityWarnings &&
+                            <div className="sidebarSection">
+                                <PluginInactiveWarnings securityWarnings={plugin.securityWarnings}/>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
         </Layout>
