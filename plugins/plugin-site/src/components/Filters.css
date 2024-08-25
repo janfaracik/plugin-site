@@ -1,11 +1,11 @@
 .Filters--Container {
-    background: var(--background);
-    border: 1px solid rgb(0 0 0 / 20%);
-    border-radius: 3px;
-    box-shadow: 0 1px 0.5rem rgb(0 0 0 / 15%);
+    /*background: var(--background);*/
+    /*border: 1px solid rgb(0 0 0 / 20%);*/
+    /*border-radius: 3px;*/
+    /*box-shadow: 0 1px 0.5rem rgb(0 0 0 / 15%);*/
     font-size: 0.85rem;
-    font-weight: 200;
-    padding: 0 1rem 1.5rem;
+    /*font-weight: 200;*/
+    /*padding: 0 1rem 1.5rem;*/
     position: relative;
     text-align: left;
 
@@ -29,7 +29,7 @@
     }
 
     & .headerContainer {
-        border-top: 1px solid rgb(0 0 0 / 10%);
-        padding: 1rem;
+        /*border-top: 1px solid rgb(0 0 0 / 10%);*/
+        /*padding: 1rem;*/
     }
 }

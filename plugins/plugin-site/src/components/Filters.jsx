@@ -20,19 +20,15 @@ function Filters({
         <fieldset>
             <div className={classNames('Filters--Container', 'filters', 'container')}>
                 <div className="row headerContainer">
-                    <div className={showResults ? 'col-md-12' : 'col-md-3'}>
-                        <Sort setSort={setSort} sort={sort} />
-                    </div>
-                    <div className={showResults ? 'col-md-12' : 'col-md-9'}>
-                        <Categories
-                            anyCriteria={false}
-                            activeCategories={categories}
-                            clearCriteria={clearCriteria}
-                            toggleCategory={toggleCategory}
-                            activeLabels={labels}
-                            toggleLabel={toggleLabel}
-                        />
-                    </div>
+                    <Sort setSort={setSort} sort={sort} />
+                    <Categories
+                        anyCriteria={false}
+                        activeCategories={categories}
+                        clearCriteria={clearCriteria}
+                        toggleCategory={toggleCategory}
+                        activeLabels={labels}
+                        toggleLabel={toggleLabel}
+                    />
                 </div>
             </div>
         </fieldset>

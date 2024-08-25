@@ -10,6 +10,7 @@ import SeoHeader from '../components/SeoHeader';
 
 import './index.css';
 import SearchBox from '../components/SearchBox';
+import SearchPage from './search';
 
 
 function IndexPage() {
@@ -84,47 +85,7 @@ function IndexPage() {
   `);
 
     return (
-        <Layout sourcePath={indexPage}>
-            <SeoHeader />
-            <div className="app-container" onSubmit={handleOnSubmit}>
-                <div className={'app-search-thing'}>
-                    <h1>Plugins</h1>
-                    <SearchBox
-                        handleOnSubmit={handleOnSubmit}
-                        query={query}
-                        setQuery={setQuery}
-                    />
-                </div>
-
-                <div className={'app-plugin-manager-carousel'}>
-                    {carousel.map(item => (
-                        <div key={'banan'}>
-                            <div className={'app-aurora'} style={{opacity: 0.75}} />
-                            <div className={'carousel-tags'}>
-                                {item.tags.map(tag => (
-                                    <h1 key={'h1'}>{tag}</h1>
-                                ))}
-                            </div>
-                            <p>{item.title}</p>
-                            <span>{item.description}</span>
-                        </div>
-                    ))}
-                </div>
-
-                <div className={'app-plugin-manager-categories'}>
-                    { data.categories.edges.map(({node: category}) => (
-                        <Link key={`cat-box-id-${category.id}`} to={`/ui/search/?categories=${category.id}`}>{category.title}</Link>
-                    ))}
-                </div>
-
-                <h1 style={{height: '100vh'}} />
-
-
-                {/*<h1>{pageTitle}</h1>*/}
-                {/*<p className="app-description">Discover the 1900+ community contributed Jenkins plugins to support building, deploying and automating any project.</p>*/}
-                {/*<Footer />*/}
-            </div>
-        </Layout>
+        <SearchPage location={{search: 'dark theme'}} />
     );
 }
 

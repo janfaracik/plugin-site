@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {navigate, useStaticQuery, graphql} from 'gatsby';
+import {navigate, useStaticQuery, graphql, Link} from 'gatsby';
 import algoliasearch from 'algoliasearch/lite';
 
 import Layout from '../layout';
@@ -15,6 +15,7 @@ import SearchBox from '../components/SearchBox';
 import Filters from '../components/Filters';
 import ActiveFilters from '../components/ActiveFilters';
 import SearchByAlgolia from '../components/SearchByAlgolia';
+import Carousel from "../components/Carousel";
 
 function groupBy(objectArray, property) {
     return objectArray.reduce((acc, obj) => {
@@ -122,71 +123,96 @@ function SearchPage({location}) {
         doSearch(parsed, setResults, categoriesMap);
     }, [location]);
 
+
     return (
         <Layout id="searchpage" sourcePath={searchPage}>
-            <SeoHeader pathname={'/ui/search'} title="Search Results" />
+            <SeoHeader pathname={'/ui/search'} title="Search Results"/>
 
-            <div className="row d-flex">
-                {showFilter && (<div className="col-md-3 order-last order-md-first">
-                    <Filters
+            <div className={'app-container'}>
+                <div className={'app-search-thing'}>
+                    <h1>Plugins</h1>
+                    <SearchBox
                         showFilter={showFilter}
-                        showResults
-                        sort={sort}
-                        categories={categories}
-                        labels={labels}
-                        setSort={setSort}
-                        clearCriteria={clearCriteria}
-                        toggleCategory={toggleCategory}
-                        toggleLabel={toggleLabel}
+                        setShowFilter={setShowFilter}
+                        query={query || ''}
+                        setQuery={setQuerySilent}
+                        handleOnSubmit={handleOnSubmit}
                     />
-                </div>)}
-                <div className={showFilter ? 'col-md-9' : 'offset-md-1 col-md-10'}>
-                    <div className="row pt-4 add-m">
-                        <div className={'col-md-9'}>
-                            <SearchBox
-                                showFilter={showFilter}
-                                setShowFilter={setShowFilter}
-                                query={query || ''}
-                                setQuery={setQuerySilent}
-                                handleOnSubmit={handleOnSubmit}
-                            />
+                </div>
+
+                <Carousel />
+
+                {/*<div className={'app-plugin-manager-categories'}>*/}
+                {/*    {data.categories.edges.map(({node: category}) => (*/}
+                {/*        <Link key={`cat-box-id-${category.id}`}*/}
+                {/*              to={`/ui/search/?categories=${category.id}`}>{category.title}</Link>*/}
+                {/*    ))}*/}
+                {/*</div>*/}
+
+                <div className="row d-flex">
+                    {showFilter && (<div className="col-md-3 order-last order-md-first">
+                        <Filters
+                            showFilter={showFilter}
+                            showResults
+                            sort={sort}
+                            categories={categories}
+                            labels={labels}
+                            setSort={setSort}
+                            clearCriteria={clearCriteria}
+                            toggleCategory={toggleCategory}
+                            toggleLabel={toggleLabel}
+                        />
+                    </div>)}
+                    <div className={showFilter ? 'col-md-9' : 'offset-md-1 col-md-10'}>
+                        {/*<div className="row pt-4 add-m">*/}
+                        {/*    <div className={'col-md-9'}>*/}
+                        {/*        <SearchBox*/}
+                        {/*            showFilter={showFilter}*/}
+                        {/*            setShowFilter={setShowFilter}*/}
+                        {/*            query={query || ''}*/}
+                        {/*            setQuery={setQuerySilent}*/}
+                        {/*            handleOnSubmit={handleOnSubmit}*/}
+                        {/*        />*/}
+                        {/*    </div>*/}
+                        {/*    <div className={'col-md-3'}>*/}
+                        {/*        <Views view={view} setView={setView}/>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
+                        {/*<div className="row">*/}
+                        {/*    <div className="col-md-12 text-center">*/}
+                        {/*        <SearchByAlgolia/>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
+                        <div className="row">
+                            <div className="col-md-12">
+                                <ActiveFilters
+                                    activeCategories={categories}
+                                    activeLabels={labels}
+                                    activeQuery={query}
+                                    clearQuery={clearQuery}
+                                    toggleCategory={toggleCategory}
+                                    toggleLabel={toggleLabel}
+                                />
+                            </div>
                         </div>
-                        <div className={'col-md-3'}>
-                            <Views view={view} setView={setView} />
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-12 text-center">
-                            <SearchByAlgolia />
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-12">
-                            <ActiveFilters
-                                activeCategories={categories}
-                                activeLabels={labels}
-                                activeQuery={query}
-                                clearQuery={clearQuery}
-                                toggleCategory={toggleCategory}
-                                toggleLabel={toggleLabel}
-                            />
-                        </div>
-                    </div>
-                    <div className="view">
-                        <div className="col-md-12">
-                            <SearchResults
-                                showFilter={showFilter}
-                                showResults
-                                view={view}
-                                setPage={setPage}
-                                results={results}
-                            />
-                            <SuspendedPlugins pluginIds={suspendedPlugins.filter(e => query && query.length >2 && e.includes(query))}/>
+                        <div className="view">
+                            <div className="col-md-12">
+                                <SearchResults
+                                    showFilter={showFilter}
+                                    showResults
+                                    view={view}
+                                    setPage={setPage}
+                                    results={results}
+                                />
+                                <SuspendedPlugins
+                                    pluginIds={suspendedPlugins.filter(e => query && query.length > 2 && e.includes(query))}/>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                {/*<Footer/>*/}
             </div>
-            <Footer />
         </Layout>
     );
 }
