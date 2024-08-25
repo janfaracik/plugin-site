@@ -1,16 +1,85 @@
-.SearchBox--Container {
-    & .form-group {
-        width: 100%;
-    }
-}
+/*.SearchBox--Container {*/
+/*    & .form-group {*/
+/*        width: 100%;*/
+/*    }*/
+/*}*/
 
-.add-m {
-    margin-left: 8rem;
-}
+/*.add-m {*/
+/*    margin-left: 8rem;*/
+/*}*/
 
-@media only screen and (width <= 768px) {
-    .add-m {
-        margin-left: 1rem;
-        margin-right: 1rem;
+/*@media only screen and (width <= 768px) {*/
+/*    .add-m {*/
+/*        margin-left: 1rem;*/
+/*        margin-right: 1rem;*/
+/*    }*/
+/*}*/
+
+.form-group {
+    --background: color-mix(in srgb, var(--color) 5%, transparent);
+    --border: transparent;
+
+    ::placeholder {
+        color: var(--color--secondary);
     }
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+    appearance: none;
+    font-size: 1rem;
+    background: var(--background);
+    border: 2px solid var(--border);
+    border-radius: 0.66rem;
+    color: var(--color);
+    transition: 0.2s ease;
+    box-shadow: 0 0 0 10px transparent;
+    outline: none;
+    min-width: 700px;
+
+    &:not(:disabled) {
+        &:hover {
+            --background: color-mix(in srgb, var(--color) 6%, transparent);
+            --border: color-mix(in srgb, var(--color) 10%, transparent);
+        }
+
+        &:active, &:focus-within {
+            --background: color-mix(in srgb, var(--color) 7%, transparent);
+            --border: var(--accent-color);
+            box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent-color) 20%, transparent);
+        }
+    }
+
+    &:disabled {
+        opacity: 0.5;
+    }
+
+    .input-group {
+        display: contents;
+    }
+
+    input {
+        background: none;
+        border: none;
+        outline: none;
+        padding: 0.6rem 0.9rem;
+    }
+
+    button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        outline: none;
+        padding: 0;
+        aspect-ratio: 1;
+        height: 100%;
+        color: var(--color--secondary);
+
+        ion-icon {
+            width: 1.rem;
+            height: 1.rem;
+        }
+    }
+
 }

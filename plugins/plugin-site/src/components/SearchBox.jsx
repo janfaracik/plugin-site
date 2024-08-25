@@ -19,12 +19,12 @@ function SearchBox({handleOnSubmit, showFilter, setShowFilter, query, setQuery})
         <fieldset className="SearchBox--Container">
             <div className="form-group">
                 <InputGroup>
-                    {setShowFilter && <Button color="primary" onClick={handleToggleShowFilter}>
-                        {'Browse '}
-                        <span>{showFilter ? '▼' : '◄' }</span>
-                    </Button>}
-                    {!setShowFilter && <Button onClick={handleOnSubmit} color="primary">Browse</Button>}
-                    <Input
+                    {/*{setShowFilter && <Button color="primary" onClick={handleToggleShowFilter}>*/}
+                    {/*    {'Browse '}*/}
+                    {/*    <span>{showFilter ? '▼' : '◄' }</span>*/}
+                    {/*</Button>}*/}
+                    {/*{!setShowFilter && <Button onClick={handleOnSubmit} color="primary">Browse</Button>}*/}
+                    <input
                         name="query"
                         value={query}
                         autoFocus
@@ -36,9 +36,9 @@ function SearchBox({handleOnSubmit, showFilter, setShowFilter, query, setQuery})
                         onChange={(e) => setQuery(e.target.value)}
                         placeholder="Find plugins..."
                     />
-                    <Button color="primary" onClick={handleOnSubmit}>
-                        <i className={classNames('icon-search')} />
-                    </Button>
+                    <button onClick={handleOnSubmit}>
+                        <ion-icon name="search-outline" />
+                    </button>
                 </InputGroup>
             </div>
         </fieldset>
