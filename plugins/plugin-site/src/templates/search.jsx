@@ -75,6 +75,8 @@ function SearchPage({location}) {
                   title
                   name
                   firstRelease
+                  labels
+                  popularity
                 }
               }
             }
@@ -129,6 +131,15 @@ function SearchPage({location}) {
         doSearch(parsed, setResults, categoriesMap);
     }, [location]);
 
+    function formatToK(num) {
+        if (num >= 1000) {
+            const formattedNum = Math.round(num / 1000);
+            return `${formattedNum}k`;
+        } else {
+            return num.toString(); // Return the original number if less than 1000
+        }
+    }
+
     // Carousel
     const carousel = [
         {
@@ -141,9 +152,9 @@ function SearchPage({location}) {
     graphqlData.trend.edges.forEach(({node: edge}) => {
         carousel.push({
             title: edge.title,
-            description: '',
-            url: edge.name,
-            tags: ['Trending'],
+            description: 'I am some placeholder text',
+            url: `/${ edge.name}`,
+            tags: ['Trending', `${formatToK(edge.popularity)} installs`, ...edge.labels.map(e => e.replaceAll('-', ' '))],
         });
     });
 
