@@ -9,7 +9,7 @@
     border-radius: 10px;
     margin: 0 -10px 2rem -10px;
 
-    & > div {
+    & > a {
         position: relative;
         display: flex;
         justify-content: center;
@@ -25,6 +25,8 @@
         z-index: 0;
         cursor: pointer;
         overflow: hidden;
+        text-decoration: none;
+        color: var(--color);
 
         p {
             font-size: 1.3rem;
@@ -123,5 +125,37 @@
             radial-gradient(at 80% 100%, var(--yellow) 0, transparent 50%),
             radial-gradient(at 0% 0%, var(--cyan) 0, transparent 50%);
         animation: aurora-two 15s linear infinite;
+    }
+}
+
+.lightyears {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    bottom: 20px;
+    left: 50%;
+    translate: -50% 0;
+    gap: 0.5rem;
+
+    button {
+        appearance: none;
+        outline: none;
+        border-radius: 100px;
+        background: none;
+        border: 1.5px solid var(--color--secondary);
+        width: 0.375rem;
+        height: 0.375rem;
+        padding: 0;
+        opacity: 0.25;
+        transition: 0.2s ease;
+
+        &:first-of-type {
+            background: var(--color--secondary);
+        }
+
+        &:hover {
+            scale: 1.5;
+        }
     }
 }

@@ -1,21 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {navigate, useStaticQuery, graphql, Link} from 'gatsby';
+import {navigate, useStaticQuery, graphql} from 'gatsby';
 import algoliasearch from 'algoliasearch/lite';
 
 import Layout from '../layout';
 import forceArray from '../utils/forceArray.mjs';
 import useFilterHooks from '../components/FiltersHooks';
 import SeoHeader from '../components/SeoHeader';
-import Footer from '../components/Footer';
 import SuspendedPlugins from '../components/SuspendedPlugins';
-import Views from '../components/Views';
 import SearchResults from '../components/SearchResults';
 import SearchBox from '../components/SearchBox';
 import Filters from '../components/Filters';
 import ActiveFilters from '../components/ActiveFilters';
-import SearchByAlgolia from '../components/SearchByAlgolia';
-import Carousel from "../components/Carousel";
+import Carousel from '../components/Carousel';
 
 function groupBy(objectArray, property) {
     return objectArray.reduce((acc, obj) => {
@@ -72,6 +69,15 @@ function SearchPage({location}) {
     const [results, setResults] = React.useState(null);
     const graphqlData = useStaticQuery(graphql`
         query {
+            trend: allJenkinsPlugin(sort: {stats: {trend: DESC}}, limit: 4) {
+              edges {
+                node {
+                  title
+                  name
+                  firstRelease
+                }
+              }
+            }
             categories: allJenkinsPluginCategory {
                 edges {
                     node {
@@ -99,7 +105,7 @@ function SearchPage({location}) {
         clearCriteria,
         categories, toggleCategory,
         labels, toggleLabel,
-        view, setView,
+        view,
         page, setPage,
         query, setQuerySilent, clearQuery,
         setData
@@ -123,6 +129,23 @@ function SearchPage({location}) {
         doSearch(parsed, setResults, categoriesMap);
     }, [location]);
 
+    // Carousel
+    const carousel = [
+        {
+            title: 'Welcome to the new Jenkins plugins site 🚀',
+            description: 'Discover the 1900+ community contributed Jenkins plugins to support building, deploying and automating any project',
+            url: 'https://www.jenkins.io/blog/2024/08/01/board-officer-election-announcement/',
+            tags: ['Hey'],
+        }
+    ];
+    graphqlData.trend.edges.forEach(({node: edge}) => {
+        carousel.push({
+            title: edge.title,
+            description: '',
+            url: edge.name,
+            tags: ['Trending'],
+        });
+    });
 
     return (
         <Layout id="searchpage" sourcePath={searchPage}>
@@ -140,7 +163,7 @@ function SearchPage({location}) {
                     />
                 </div>
 
-                <Carousel />
+                <Carousel data={carousel} />
 
                 {/*<div className={'app-plugin-manager-categories'}>*/}
                 {/*    {data.categories.edges.map(({node: category}) => (*/}
